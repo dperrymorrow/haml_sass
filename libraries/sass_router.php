@@ -7,7 +7,10 @@ class Sass_router{
 	
 	public function __construct()
 	{
-		define('HAML_SASS_ROOT', dirname(__DIR__));
+		if( !defined('HAML_SASS_ROOT'))
+		{
+			define('HAML_SASS_ROOT', dirname(__DIR__));
+		}
 		require_once( HAML_SASS_ROOT . '/config/haml_sass.php' );
 		$this->config = $config[ 'sass' ];
 	}

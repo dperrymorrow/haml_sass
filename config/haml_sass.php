@@ -13,17 +13,16 @@ $config['haml']['cache_dir'] = APPPATH.'cache/haml_cache';
 */
 $config['haml']['parser_options'] = array( 	'style'=>'nested', 
 											'ugly'=>false,
-											'format'=>'html5' 
+											'escapeHtml'=>true,
+											'style'=>'expanded',
+											'format'=>'html5',
+											'preserve'=>array('div','p')
 										);
 /**
 * where the sass_router should look for your sass files
 */
 $config['sass']['sass_dir'] = APPPATH.'views/sass';	
-/**
-* the word that triggers the sass router
-* be carefull, use something that you wont want as a controller action
-*/
-$config['sass']['router_trigger'] = 'css';																		
+																	
 /**
 * location for the cached sass files
 */											
@@ -51,6 +50,13 @@ $config['sass']['parser_options'] = array( 	'cache'=>TRUE,
 * @link http://codeigniter.com/user_guide/general/hooks.html
 * you must set $config['enable_hooks'] = TRUE; in your application/config/config.php as well 
 */
+
+/**
+* the word that triggers the sass router
+* be carefull, use something that you wont want as a controller action
+*/
+$config['sass']['router_trigger'] = 'css';
+
 
 /**
 * // the hook...

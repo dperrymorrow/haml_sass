@@ -3,7 +3,8 @@
 if (! defined('BASEPATH')) exit('No direct script access');
 
 class Haml_sass{
-	
+
+	
 	public $haml_parser = null;
 	public $haml_settings = array();
 	public $saas_settings = array();
@@ -12,7 +13,10 @@ class Haml_sass{
 	//php 5 constructor
 	function __construct() {
 		
-		define('HAML_SASS_ROOT', dirname(__DIR__));
+		if( !defined('HAML_SASS_ROOT'))
+		{
+			define('HAML_SASS_ROOT', dirname(__DIR__));
+		}
 		
 		$this->CI = &get_instance();
 		require_once( HAML_SASS_ROOT . '/vendor/haml/HamlParser.php' );
