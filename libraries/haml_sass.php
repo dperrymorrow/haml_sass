@@ -19,8 +19,10 @@ class Haml_sass{
 		}
 		
 		$this->CI = &get_instance();
-		require_once( HAML_SASS_ROOT . '/vendor/haml/HamlParser.php' );
-		require_once( HAML_SASS_ROOT . '/vendor/sass/SassParser.php' );
+		$vendor_path = HAML_SASS_ROOT.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR;
+		
+		require_once( $vendor_path.'haml'.DIRECTORY_SEPARATOR.'HamlParser.php' );
+		require_once( $vendor_path.'sass'.DIRECTORY_SEPARATOR.'SassParser.php' );
 		
 		$this->haml_settings = $this->CI->config->item('haml');
 		$this->sass_settings = $this->CI->config->item('sass');
@@ -67,10 +69,10 @@ class Haml_sass{
 	{
 		// ... save the original view path, and set to our Foo Bar package view folder
 		$orig_view_path = $this->CI->load->_ci_view_path;
-		$this->CI->load->_ci_view_path = $this->haml_cache . '/';
+		$this->CI->load->_ci_view_path = $this->haml_cache . DIRECTORY_SEPARATOR;
 		// ... then return the view path to the application's original view path
 
-		$php_file = $this->haml_parser->parse( APPPATH."views/$file", $this->haml_cache, 0755, '.haml', '.php' );
+		$php_file = $this->haml_parser->parse( APPPATH."views".DIRECTORY_SEPARATOR."$file", $this->haml_cache, 0755, '.haml', '.php' );
 		$arr = explode( '/', $php_file );
 		$php_file = $arr[ count( $arr ) -1  ];
 		

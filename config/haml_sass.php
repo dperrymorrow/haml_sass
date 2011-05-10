@@ -11,7 +11,7 @@ $config['haml']['cache_dir'] = APPPATH.'cache/haml_cache';
 * @link http://code.google.com/p/phamlp/wiki/HamlOptions 
 * for complete list of options supported
 */
-$config['haml']['parser_options'] = array( 	'style'=>'nested', 
+$config['haml']['parser_options'] = array( 	'style'=>'expanded', 
 											'ugly'=>false,
 											'escapeHtml'=>true,
 											'style'=>'expanded',

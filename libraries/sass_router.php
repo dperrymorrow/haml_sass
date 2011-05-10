@@ -23,8 +23,8 @@ class Sass_router{
 		{
 			list($uri, $sass_file ) = explode( '/'.$this->config['router_trigger'].'/', $request );
 			
-			$sass_file = $this->config['sass_dir'].'/'.$sass_file;
-			$sass_file = str_replace( '//', '/', $sass_file );
+			$sass_file = $this->config['sass_dir'].DIRECTORY_SEPARATOR.$sass_file;
+			$sass_file = str_replace( DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $sass_file );
 			$sass_file = str_replace( '.css', '.sass', $sass_file );
 			
 			if( file_exists( $sass_file ))
@@ -41,7 +41,8 @@ class Sass_router{
 	public function load_sass_file( $file )
 	{
 		
-		require_once( HAML_SASS_ROOT . '/vendor/sass/SassParser.php' );
+		$vendor_path = HAML_SASS_ROOT.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR;
+		require_once( $vendor_path .'sass'.DIRECTORY_SEPARATOR.'SassParser.php' );
 		$this->_check_cache();
 		
 		header("Content-Type: text/css");
