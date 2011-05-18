@@ -59,7 +59,9 @@ $config['sass']['router_trigger'] = 'css';
 
 
 /**
-* // the hook...
+* You must have hooks enabled in your **application/config/config.php** file for this to work.
+* $config['enable_hooks'] = TRUE;
+* Now place the snipped you got from the **haml\_sass.php** config file into your application/config/hooks.php file. Be sure to change 1.0 to whatever the current version of the spark is.
 *
 $hook['pre_system'] = array(
                                 'class'    => 'Sass_router',
