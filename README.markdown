@@ -3,6 +3,8 @@
 
 Thanks to [Phamlp](http://code.google.com/p/phamlp/) this is available to PHP projects.
 
+## if you are using CI 2.0.2 you need to read this article before using my, or any other sparks for that matter. 2.0.2 has a bug with the loader class that breaks the sparks MY_Loader extension thereof. [http://codefury.net/2011/05/getsparks-org-beta-released-big-changes/](http://codefury.net/2011/05/getsparks-org-beta-released-big-changes/)
+
 **What is Haml & Sass?**  
 Haml and Sass have been used in Ruby for sometime to simplify templates (Haml) and make CSS more intelligent, flexible and manageable (Sass); now they come to PHP in PHamlP.
 
