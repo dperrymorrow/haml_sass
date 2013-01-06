@@ -5,12 +5,15 @@ if (! defined('BASEPATH')) exit('No direct script access');
 class Haml_sass{
 
 	
-	public $haml_parser = null;
-	public $haml_settings = array();
-	public $saas_settings = array();
-	public $haml_cache = '';
-	public $sass_cache = '';
 	//php 5 constructor
+	protected $haml_parser = null;
+	protected $haml_settings = array();
+	protected $saas_settings = array();
+	protected $haml_cache = '';
+	protected $sass_cache = '';
+	protected $orig_view_path = '';
+	protected $view_path_loaded = false;
+
 	function __construct() {
 		
 		if( !defined('HAML_SASS_ROOT'))
@@ -54,9 +57,20 @@ class Haml_sass{
 			}
 		}
 		
+		if( $this->additional_package_paths_supported() )
+		{
+			$this->CI->load->add_package_path( $this->haml_cache );
+			$this->CI->load->add_package_path( $this->sass_cache );
+			$this->view_path_loaded = true;
+		}
 	}
 	
 	
+	private function additional_package_paths_supported()
+	{
+		return CI_VERSION >= '2.0.3';
+	}
+
 	public function parse_sass( $file )
 	{
 		
@@ -67,18 +81,17 @@ class Haml_sass{
 	
 	public function parse_haml( $file, $data, $return=FALSE )
 	{
-		// ... save the original view path, and set to our Foo Bar package view folder
-		$orig_view_path = $this->CI->load->_ci_view_path;
-		$this->CI->load->_ci_view_path = $this->haml_cache . DIRECTORY_SEPARATOR;
-		// ... then return the view path to the application's original view path
+		$this->pre_parsing();
 
-		$php_file = $this->haml_parser->parse( APPPATH."views".DIRECTORY_SEPARATOR."$file", $this->haml_cache, 0755, '.haml', '.php' );
-		$arr = explode( '/', $php_file );
+		$php_file = $this->haml_parser->parse( APPPATH.'views'.DIRECTORY_SEPARATOR.$file, $this->haml_cache.
+			DIRECTORY_SEPARATOR.'views', 0755, '.haml', '.php' );
+		$arr = explode( DIRECTORY_SEPARATOR, $php_file );
 		$php_file = $arr[ count( $arr ) -1  ];
 		
 		$output = $this->CI->load->view( $php_file, $data, TRUE );
-		$this->CI->load->_ci_view_path = $orig_view_path;
 		
+		$this->post_parsing();
+
 		if( $return)
 		{
 			return $output;
@@ -89,5 +102,23 @@ class Haml_sass{
 		}
 	}
 	
+	private function pre_parsing()
+	{
+		if( !$this->view_path_loaded )
+		{
+			// ... save the original view path, and set to our Foo Bar package view folder
+			$this->orig_view_path = $this->CI->load->_ci_view_path;
+			$this->CI->load->_ci_view_path = $this->haml_cache . DIRECTORY_SEPARATOR;
+		}
+	}
+
+	private function post_parsing()
+	{
+		if( !$this->view_path_loaded )
+		{
+			// ... then return the view path to the application's original view path
+			$this->CI->load->_ci_view_path = $this->orig_view_path;
+		}
+	}
 
 }
